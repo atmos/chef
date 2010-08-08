@@ -100,24 +100,27 @@ class Chef
       providers
     end
 
+    # top level prefix for config options
+    config_root "/var/chef"
+
     # Used when OpenID authentication is enabled in the Web UI
     authorized_openid_identifiers nil
     authorized_openid_providers nil
     openid_cstore_couchdb false
-    openid_cstore_path "/var/chef/openid/cstore"
+    openid_cstore_path "#{config_root}/openid/cstore"
 
     # The number of times the client should retry when registering with the server
     client_registration_retries 5
 
     # Where the cookbooks are located. Meaning is somewhat context dependent between
     # knife, chef-client, and chef-solo.
-    cookbook_path [ "/var/chef/cookbooks", "/var/chef/site-cookbooks" ]
+    cookbook_path [ "#{config_root}/cookbooks", "#{config_root}/site-cookbooks" ]
 
     # Where files are stored temporarily during uploads
-    sandbox_path "/var/chef/sandboxes"
+    sandbox_path "#{config_root}/sandboxes"
 
     # Where cookbook files are stored on the server (by content checksum)
-    checksum_path "/var/chef/checksums"
+    checksum_path "#{config_root}/checksums"
 
     # CouchDB database name to use
     couchdb_database "chef"
@@ -125,10 +128,10 @@ class Chef
     couchdb_url "http://localhost:5984"
 
     # Where chef's cache files should be stored
-    file_cache_path "/var/chef/cache"
+    file_cache_path "#{config_root}/cache"
 
     # Where backups of chef-managed files should go
-    file_backup_path "/var/chef/backup"
+    file_backup_path "#{config_root}/backup"
 
     ## Daemonization Settings ##
     # What user should Chef run as?
@@ -145,7 +148,7 @@ class Chef
     log_location STDOUT
     verbose_logging nil
     node_name nil
-    node_path "/var/chef/node"
+    node_path "#{config_root}/node"
 
     pid_file nil
 
@@ -174,15 +177,15 @@ class Chef
 
 
     # Where should chef-solo look for role files?
-    role_path "/var/chef/roles"
+    role_path "#{config_root}/roles"
 
     # Where should chef-solo download recipes from?
     recipe_url nil
 
     solr_url "http://localhost:8983"
-    solr_jetty_path "/var/chef/solr-jetty"
-    solr_data_path "/var/chef/solr/data"
-    solr_home_path "/var/chef/solr"
+    solr_jetty_path "#{config_root}/solr-jetty"
+    solr_data_path "#{config_root}/solr/data"
+    solr_home_path "#{config_root}/solr"
     solr_heap_size "256M"
     solr_java_opts nil
 
@@ -207,8 +210,8 @@ class Chef
     # Server Signing CA
     #
     # In truth, these don't even have to change
-    signing_ca_cert "/var/chef/ca/cert.pem"
-    signing_ca_key "/var/chef/ca/key.pem"
+    signing_ca_cert "#{config_root}/ca/cert.pem"
+    signing_ca_key "#{config_root}/ca/key.pem"
     signing_ca_user nil
     signing_ca_group nil
     signing_ca_country "US"
@@ -227,7 +230,7 @@ class Chef
     # Checksum Cache
     # Uses Moneta on the back-end
     cache_type "BasicFile"
-    cache_options({ :path => "/var/chef/cache/checksums", :skip_expires => true })
+    cache_options({ :path => "#{config_root}/cache/checksums", :skip_expires => true })
 
     # Arbitrary knife configuration data
     knife Hash.new
